@@ -1,0 +1,82 @@
+<p-toast [style]="{marginTop: '100px', width: '600px'}"></p-toast>
+
+<div class="row">
+    <div class="col-lg-12">
+        <div class="card" style="padding: 10px 10px 10px 10px; margin: 10px 10px 10px 10px">
+            <h4>Survey Form</h4>
+            <div class="col-lg-12">
+                <div class="row" style="margin-top: 20px">
+                    <div class="col-lg-1" style="padding-top: 10px; text-align: right">Form Category</div>
+                    <div class="col-lg-11"><p-dropdown [options]="this.lstCategory" [style]="{width: '100%'}" [(ngModel)]="this.form.formCategory" placeholder="Choose Category"></p-dropdown></div>
+                </div>
+                <div class="row" style="margin-top: 20px">
+                    <div class="col-lg-1" style="padding-top: 10px; text-align: right">Form Title</div>
+                    <div class="col-lg-11"><input type="text" class="form-control" [(ngModel)]="this.form.formTitle"></div>
+                </div>
+                <div class="row" style="margin-top: 20px">
+                    <div class="col-lg-1" style="padding-top: 10px; text-align: right">Form Description</div>
+                    <div class="col-lg-11"><input type="text" class="form-control" [(ngModel)]="this.form.formDescription"></div>
+                </div>
+                <div class="row" style="margin-top: 20px; float: right; padding-right: 15px">
+                    <button type="button" class="btn btn-primary" style="margin-right: 10px" (click)="this.saveCategory()" [disabled]="this.isAddQuestionVisible || this.enableDisableButton('category')">Save</button>
+                    <button type="button" class="btn btn-success" (click)="this.showHideAddQuestion()">Add Question</button>
+                </div>
+            </div>
+
+            <div class="col-lg-12" *ngIf="this.isAddQuestionVisible">
+                <h6>Add Question</h6>
+                <div class="row" style="margin-top: 20px">
+                    <div class="col-lg-1" style="padding-top: 10px; text-align: right">Question</div>
+                    <div class="col-lg-11"><p-dropdown [options]="this.lstQuestion" [style]="{width: '100%'}" [(ngModel)]="this.question.question" placeholder="Choose Question"></p-dropdown></div>
+                </div>
+                <div class="row" style="margin-top: 20px">
+                    <div class="col-lg-1" style="text-align: right">Question Subtitle / Description</div>
+                    <div class="col-lg-11"><input type="text" class="form-control" [(ngModel)]="this.question.description"></div>
+                </div>
+                <div class="row" style="margin-top: 20px">
+                    <div class="col-lg-1" style="padding-top: 5px; text-align: right">Answer Type</div>
+                    <div class="col-lg-11"><p-dropdown [options]="this.lstAnswerType" [style]="{width: '100%'}" [(ngModel)]="this.question.answerType" placeholder="Choose Answer Type"></p-dropdown></div>
+                </div>
+                <br />
+                
+                <h6>Answer / Preview Customization</h6>
+
+                <div class="col-lg-12" *ngIf="this.question.answerType === 'textbox'">
+                    <div class="row" style="margin-top: 20px">
+                        <div class="col-lg-1" style="padding-top: 10px; text-align: right">Textbox* </div>
+                        <div class="col-lg-11"><input type="text" class="form-control" [(ngModel)]="this.question.answerField" [maxlength]="this.question.maxLength" [disabled]="this.checkMinAndMaxInputLength()"></div>
+                    </div>
+                    <div class="row" style="margin-top: 20px">
+                        <div class="col-lg-3" style="padding-top: 10px; text-align: right">Minimum Length</div>
+                        <div class="col-lg-3"><input type="number" min="0" class="form-control" [(ngModel)]="this.question.minLength"></div>
+                        <div class="col-lg-3" style="padding-top: 10px; text-align: right">Maximum Length</div>
+                        <div class="col-lg-3"><input type="number" min="0" class="form-control" [(ngModel)]="this.question.maxLength"></div>
+                    </div>
+                </div>
+
+                <div class="col-lg-12" *ngIf="this.question.answerType === 'checkbox'">
+                    <div class="row" style="margin-top: 20px">
+                        <div class="col-lg-1" style="text-align: right">Checkbox* </div>
+                        <div *ngFor="let item of this.question.checkBoxField; let i = index">
+                            <input type="checkbox" class="form-control" style="width: 20px; height: 20px; margin-right: 10px">
+                        </div>
+                    </div>
+                    <div class="row" style="margin-top: 20px">
+                        <div class="col-lg-1" style="padding-top: 10px; text-align: right">Choices* </div>
+                        <div *ngFor="let item of this.question.checkBoxField; let i = index">
+                            <input type="text" class="form-control" [(ngModel)]="item.value">
+                            <button pButton pRipple type="button" icon="pi pi-trash" class="p-button-rounded p-button-danger" (click)="this.removeCheckBox(i)"></button>
+                        </div>
+                    </div>
+                    <div class="row">
+                        <button type="button" class="btn btn-primary" style="margin-right: 10px" (click)="this.addCheckBox()">Add</button>
+                    </div>
+                </div>
+
+                <div class="row" style="margin-top: 20px; float: right">
+                    <button type="button" class="btn btn-primary" style="margin-right: 10px" (click)="this.saveQuestion()" [disabled]="this.enableDisableButton('question')">Save Question</button>
+                </div>
+            </div>
+        </div>
+    </div>
+</div>
