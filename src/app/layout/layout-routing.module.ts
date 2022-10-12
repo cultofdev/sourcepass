@@ -3,7 +3,6 @@ import { CommonModule } from '@angular/common';
 import { RouterModule, Routes } from '@angular/router';
 import { LayoutComponent } from './layout.component';
 import { FirstComponent } from './first/first.component';
-import { SecondComponent } from './second/second.component';
 
 const routes: Routes = [
   {
@@ -13,7 +12,6 @@ const routes: Routes = [
       { path: '', redirectTo: 'dashboard', pathMatch: 'prefix' },
       { path: 'dashboard', loadChildren: () => import('./dashboard/dashboard.module').then(m => m.DashboardModule) },
       { path: 'first', component: FirstComponent },
-      { path: 'second', component: SecondComponent },
     ]
   }
 ]
